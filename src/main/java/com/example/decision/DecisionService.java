@@ -50,6 +50,20 @@ public class DecisionService {
         return true;
     }
 
+    public Decision updateById(Decision newDecision, int id) {
+        Decision decisionToUpdate = decisionRepository.findById(id).orElse(null);
+
+        if (decisionToUpdate == null) {
+            throw new RuntimeException("Decision is not there");
+        }
+
+        decisionToUpdate.setTitle(newDecision.getTitle());
+        decisionToUpdate.setContent(newDecision.getContent());
+        decisionToUpdate.setType(newDecision.getType());
+        decisionToUpdate.setDateCreated(newDecision.getDateCreated());
+        decisionRepository.delete(newDecision);
+        return decisionRepository.save(decisionToUpdate);
+    }
 
 
 }

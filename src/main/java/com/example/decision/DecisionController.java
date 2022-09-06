@@ -25,7 +25,7 @@ public class DecisionController {
         Decision decisionCreated = decisionService.create(decision);
 
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(decisionCreated + "has been added successfully");
+            return ResponseEntity.status(HttpStatus.OK).body(decisionCreated + " has been added successfully");
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Decision has invalid properties");
         }
@@ -39,6 +39,17 @@ public class DecisionController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Decision not found");
         }
         return ResponseEntity.status(HttpStatus.OK).body("Decision has been deleted successfully");
+    }
+
+    @PutMapping("/decision/{id}")
+    public ResponseEntity<?> updateDecision(@RequestBody Decision newDecision, @PathVariable String id) {
+        Decision decisionUpdated = decisionService.updateById(newDecision, Integer.parseInt(id));
+
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(decisionUpdated + " has been updated successfully");
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Decision not found");
+        }
     }
 
 
